@@ -30,6 +30,21 @@ def signup():
 def login():
     return 'Login page'
 
+@app.route("/guide")
+def guide():
+    return render_template(
+        "guide.html",
+        title="Гайд по проекту EmotionMap",
+        welcome_message="Добро пожаловать в EmotionMap!",
+        description="Спасибо за регистрацию! Вот как пользоваться проектом:",
+        guide_items=[
+            "Нажмите на карту, чтобы добавить свою эмоцию в выбранной точке.",
+            "Посмотрите, что другие пользователи чувствуют в разных местах.",
+            "Делитесь эмоциями, чтобы сделать карту живой!",
+        ],
+    )
+
+
 if __name__ == '__main__':
     db_session.global_init('db/users.db')
     
