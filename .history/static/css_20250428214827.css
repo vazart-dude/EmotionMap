@@ -1,0 +1,35 @@
+header{
+    height:10%;
+    width:100%;
+    background-color:#0099FF;
+    color:white;
+    font-family:calibri;
+    font-size:30px;
+    padding-left:50px;
+    padding-top:10px;
+    font-weight:bold;
+    border-bottom:10px solid white;
+    font-style:italic;
+    text-align:center;
+}
+.navbar {
+    overflow: hidden; 
+    background-color: #0099FF; 
+    position: fixed; /* Фиксирует позицию элемента */
+    width: 40%; /* Устанавливает ширину элемента на 100% от ширины родительского элемента */
+}
+
+.navbar a {
+    float: left; 
+    display: block; 
+    color: white; 
+    text-align: center; 
+    padding: 14px 16px; 
+    text-decoration: none; 
+    font-size: 17px; 
+}
+
+.navbar a:hover {
+    background:white ;
+    color: black; 
+}

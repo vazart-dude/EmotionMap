@@ -1,0 +1,36 @@
+header{
+    height:10%;
+    width:100%;
+    background-color:#0099FF;
+    color:white;
+    font-family:calibri;
+    font-size:30px;
+    padding-left:50px;
+    padding-top:10px;
+    font-weight:bold;
+    border-bottom:10px solid white;
+    font-style:italic;
+    text-align:center;
+}
+.navbar {
+    overflow: hidden; 
+    background-color: #0099FF; 
+    position: fixed; /* Фиксирует позицию элемента */
+    top: ; /* Позиционирует элемент в верхней части страницы */
+    width: 100%; /* Устанавливает ширину элемента на 100% от ширины родительского элемента */
+}
+
+.navbar a {
+    float: left; /* Выравнивает ссылки по левому краю */
+    display: block; /* Устанавливает ссылки как блочные элементы */
+    color: #f2f2f2; /* Устанавливает цвет текста */
+    text-align: center; /* Выравнивает текст по центру */
+    padding: 14px 16px; /* Устанавливает внутренние отступы */
+    text-decoration: none; /* Убирает подчеркивание у ссылок */
+    font-size: 17px; /* Устанавливает размер шрифта */
+}
+
+.navbar a:hover {
+    background: #ddd; /* Устанавливает цвет фона при наведении курсора */
+    color: black; /* Устанавливает цвет текста при наведении курсора */
+}
