@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 40px;">
+
+  <div style="max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+    <h1 style="text-align: center;">{{ welcome_message }}</h1>
+    <p>{{ description }}</p>
+
+    <ul>
+      {% for item in guide_items %}
+        <li>✅ {{ item }}</li>
+      {% endfor %}
+    </ul>
+
+    <button onclick="startUsing()" style="display: block; width: 100%; margin-top: 30px; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer;">Начать пользоваться</button>
+  </div>
+
+  <script>
+    function startUsing() {
+      window.location.href = '/'; // Перенаправление на главную страницу
+    }
+  </script>
+  </div>
+
+</body>
+</html>
