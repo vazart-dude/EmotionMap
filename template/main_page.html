@@ -27,3 +27,25 @@
         </div>
     </div>
 </nav>
+<body class="d-flex flex-column" style="height: 100vh; overflow: hidden;">
+    <!-- Основной контент -->
+    <div class="container-fluid flex-grow-1 position-relative p-0" style="min-height: 0;">
+        <div class="h-100 w-100 position-relative" 
+             style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                    url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1950&q=80');
+                    background-size: cover;
+                    background-position: center;
+                    overflow: hidden;">
+            
+            <!-- Центральный контент -->
+            <div class="position-absolute top-50 start-50 translate-middle text-center text-white w-100 px-3">
+                <h1 class="display-2 display-md-1 fw-bold mb-3 mb-md-4">EMOTIONMAP</h1>
+                <p class="lead fs-3 fs-md-2 mb-4 mb-md-5">Запомни эти места и эмоции</p>
+                <h2 class="display-6 display-md-5 mb-4">Попробуй прямо сейчас</h2>
+                <a href="{{ url_for('signup') }}" class="btn btn-success btn-lg px-4 px-md-5 py-2 py-md-3 fs-5 fs-md-4 shadow">
+                    Начать
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
