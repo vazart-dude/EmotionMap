@@ -28,7 +28,7 @@ def signup():
 
 @app.route('/login')
 def login():
-    return 'Login page'
+    return render_template("login.html")
 
 @app.route("/guide")
 def guide():

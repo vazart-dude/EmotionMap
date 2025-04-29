@@ -45,8 +45,8 @@
 
 <div class="signup-container">
     <div class="header">
-        <h2>EmotionMap</h2>
-        <p>Create your account</p>
+        <h2>Sign Up</h2>
+        <p>Log in into your account</p>
     </div>
     <form>
         <div class="mb-3">
@@ -54,25 +54,19 @@
             <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
         </div>
         <div class="mb-3">
-            <label for="email" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
-        </div>
-        <div class="mb-3">
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" placeholder="Password" required>
         </div>
-        <div class="mb-3">
-            <label for="confirm-password" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" id="confirm-password" placeholder="Confirm Password" required>
-        </div>
         <dic class="d-grid">
-            <button type="submit" class="btn btn-custom btn-block">Sign Up</button>
+            <button type="submit" class="btn btn-custom btn-block">Log In</button>
         </dic>
     </form>
-    <p class="text-center mt-3">Already have an account? <a href="{{ url_for('login') }} ">Log in</a></p>
+    <p class="text-center mt-3">Don't have an account? <a href="{{ url_for('signup') }} ">Sign up</a></p>
     <div class="text-center mt-3">
         <a href="#" class="btn">Back to Mainpage</a>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
