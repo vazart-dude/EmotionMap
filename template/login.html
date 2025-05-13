@@ -45,21 +45,28 @@
 
 <div class="signup-container">
     <div class="header">
-        <h2>Sign Up</h2>
-        <p>Log in into your account</p>
+        <h2>Have an account?</h2>
+        <p>Log in into it</p>
     </div>
-    <form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div style="color: red;">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form action="/login" method="post">
         <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
+            <label for="login" class="form-label">Username</label>
+            <input type="text" class="form-control" name="login" id="login" placeholder="Enter your username" required>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="Password" required>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
         </div>
-        <dic class="d-grid">
+        <div class="d-grid">
             <button type="submit" class="btn btn-custom btn-block">Log In</button>
-        </dic>
+        </div>
     </form>
     <p class="text-center mt-3">Don't have an account? <a href="{{ url_for('signup') }} ">Sign up</a></p>
     <div class="text-center mt-3">

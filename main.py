@@ -1,9 +1,10 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, flash
 from data import db_session
 from data.users import User
 import sqlite3
 
 app = Flask(__name__, template_folder='template')
+app.secret_key = 'your_secret_key'
 
 
 @app.route('/')
@@ -23,11 +24,21 @@ def signup():
         if result:
             return 'Пользователь успешно добавлен!'
         else:
-            return 'Пользователь с таким логином или email уже существует!'
+            flash("Пользователь с таким логином или email уже существует", "error")
     return render_template("registration.html")
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == "POST":
+        login = request.form['login']
+        password = request.form['password']
+        user = User()
+        result = user.login_user(login, password)
+        if result:
+            print("logged in")
+            return "Успешный логин"
+        else:
+            flash("Неверный логин или пароль", "error")
     return render_template("login.html")
 
 @app.route("/guide")
@@ -48,4 +59,4 @@ def guide():
 if __name__ == '__main__':
     db_session.global_init('db/users.db')
     
-    app.run(port=8080, host='127.0.0.1')
+    app.run(port=8080, host='127.0.0.1', debug=True)

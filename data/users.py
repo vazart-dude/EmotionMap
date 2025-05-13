@@ -22,8 +22,8 @@ class User(SqlAlchemyBase, SerializerMixin):
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)
         
-    def check_password(self, password):
-        return check_password_hash(password)
+    def check_password(self, phash, password):
+        return check_password_hash(phash, password)
     
     def add_user(self, login, password, email):
         session = db_session.create_session()
@@ -35,4 +35,17 @@ class User(SqlAlchemyBase, SerializerMixin):
         session.add(self)
         session.commit()
         return True
+    
+    def login_user(self, login, password):
+        session = db_session.create_session()
+        if session.query(User).filter(User.login == login).first():
+            user = session.query(User).filter(User.login == login).first()
+            if user.check_password(user.hashed_password, password):
+                return True # user logged in
+            else:
+                print("incorrect password")
+                return False # incorrect password
+        else:
+            print("user not found")
+            return False # user not found
 #jobs = orm.relationship("Jobs", back_populates='user')

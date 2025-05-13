@@ -48,26 +48,33 @@
         <h2>EmotionMap</h2>
         <p>Create your account</p>
     </div>
-    <form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div style="color: red;">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form action="/registration" method="post">
         <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
+            <label for="login" class="form-label">Username</label>
+            <input type="text" class="form-control" name="login" id="login" placeholder="Enter your username" required>
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+            <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="Password" required>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
         </div>
         <div class="mb-3">
             <label for="confirm-password" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" id="confirm-password" placeholder="Confirm Password" required>
+            <input type="password" class="form-control" name="confirm-password" id="confirm-password" placeholder="Confirm Password" required>
         </div>
-        <dic class="d-grid">
+        <div class="d-grid">
             <button type="submit" class="btn btn-custom btn-block">Sign Up</button>
-        </dic>
+        </div>
     </form>
     <p class="text-center mt-3">Already have an account? <a href="{{ url_for('login') }} ">Log in</a></p>
     <div class="text-center mt-3">
