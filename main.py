@@ -1,15 +1,17 @@
-from flask import Flask, request, render_template, flash
+import secrets
+from flask import Flask, request, render_template, flash, redirect, url_for, session
 from data import db_session
 from data.users import User
 import sqlite3
 
 app = Flask(__name__, template_folder='template')
-app.secret_key = 'your_secret_key'
+app.secret_key = secrets.token_hex(16)
 
 
 @app.route('/')
 def page():
-    return render_template("main_page.html")
+    is_logged_in = 'username' in session
+    return render_template("main_page.html", is_logged_in=is_logged_in)
 
 
 
@@ -35,11 +37,17 @@ def login():
         user = User()
         result = user.login_user(login, password)
         if result:
-            print("logged in")
-            return "Успешный логин"
+            session['username'] = login
+            return redirect(url_for('page'))
         else:
             flash("Неверный логин или пароль", "error")
     return render_template("login.html")
+
+@app.route('/profile')
+def profile():
+    if 'username' in session:
+        return render_template('profile.html', username=session['username'])
+    return redirect(url_for('login'))
 
 @app.route("/guide")
 def guide():
