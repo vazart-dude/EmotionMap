@@ -19,8 +19,12 @@ def page():
 def signup():
     if request.method == "POST":
         login = request.form['login']
-        password = request.form['password']
         email = request.form['email']
+        password = request.form['password']
+        confirm_password = request.form['confirm-password']
+        if password != confirm_password:
+            flash("Пароли не совпадают", "error")
+            return render_template('registration.html')
         user = User()
         result = user.add_user(login, password, email)
         if result:
