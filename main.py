@@ -1,11 +1,13 @@
 import secrets
-from flask import Flask, request, render_template, flash, redirect, url_for, session
+from flask import Flask, request, render_template, flash, redirect, url_for, session, jsonify
 from data import db_session
 from data.users import User
 import sqlite3
+import os
+import json
 
 app = Flask(__name__, template_folder='template')
-app.secret_key = secrets.token_hex(16)
+app.secret_key = "secret_key"
 
 
 @app.route('/')
@@ -53,6 +55,55 @@ def profile():
         return render_template('profile.html', username=session['username'])
     return redirect(url_for('login'))
 
+@app.route('/save_marker', methods=['POST'])
+def save_marker():
+    if 'username' not in session:
+        return jsonify({'success': False, 'error': 'Не авторизован'}), 401
+    data = request.get_json()
+    marker = {
+        'emotion': data.get('emotion'),
+        'title': data.get('title'),
+        'description': data.get('description'),
+        'date': data.get('date'),
+        'latitude': data.get('latitude'),
+        'longitude': data.get('longitude'),
+        'username': session['username']
+    }
+    os.makedirs('data', exist_ok=True)
+    file_path = os.path.join('data', 'markers.json')
+    if os.path.exists(file_path):
+        with open(file_path, 'r', encoding='utf-8') as f:
+            try:
+                markers = json.load(f)
+            except Exception:
+                markers = []
+    else:
+        markers = []
+    markers.append(marker)
+    with open(file_path, 'w', encoding='utf-8') as f:
+        json.dump(markers, f, ensure_ascii=False, indent=2)
+    return jsonify({'success': True})
+
+@app.route('/get_markers', methods=['GET'])
+def get_markers():
+    if 'username' not in session:
+        return jsonify([])
+    file_path = os.path.join('data', 'markers.json')
+    if os.path.exists(file_path):
+        with open(file_path, 'r', encoding='utf-8') as f:
+            try:
+                markers = json.load(f)
+            except Exception:
+                markers = []
+    else:
+        markers = []
+    user_markers = [m for m in markers if m.get('username') == session['username']]
+    return jsonify(user_markers)
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('page'))
 
 if __name__ == '__main__':
     db_session.global_init('db/users.db')
