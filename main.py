@@ -2,7 +2,6 @@ import secrets
 from flask import Flask, request, render_template, flash, redirect, url_for, session, jsonify
 from data import db_session
 from data.users import User
-import sqlite3
 import os
 import json
 
