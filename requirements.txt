@@ -1,4 +1,4 @@
 Flask==3.0.3
 SQLAlchemy==2.0.29
-Werkzeug==3.0.3
+Werkzeug==3.0.6
 sqlalchemy-serializer==1.4.22
