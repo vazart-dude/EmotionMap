@@ -2,12 +2,22 @@ import secrets
 from flask import Flask, request, render_template, flash, redirect, url_for, session, jsonify
 from data import db_session
 from data.users import User
-import sqlite3
+from data.markers import Marker
 import os
 import json
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 app = Flask(__name__, template_folder='template')
 app.secret_key = os.environ.get('SECRET_KEY', secrets.token_hex(16))
+
+# Настройка подключения к базе данных
+DATABASE_URL = os.environ.get('DATABASE_URL', 'sqlite:///db/users.db')
+if DATABASE_URL.startswith('postgres://'):
+    DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
+
+engine = create_engine(DATABASE_URL)
+Session = sessionmaker(bind=engine)
 
 @app.route('/')
 def page():
@@ -56,46 +66,48 @@ def profile():
 def save_marker():
     if 'username' not in session:
         return jsonify({'success': False, 'error': 'Не авторизован'}), 401
+    
     data = request.get_json()
-    marker = {
-        'emotion': data.get('emotion'),
-        'title': data.get('title'),
-        'description': data.get('description'),
-        'date': data.get('date'),
-        'latitude': data.get('latitude'),
-        'longitude': data.get('longitude'),
-        'username': session['username']
-    }
-    os.makedirs('data', exist_ok=True)
-    file_path = os.path.join('data', 'markers.json')
-    if os.path.exists(file_path):
-        with open(file_path, 'r', encoding='utf-8') as f:
-            try:
-                markers = json.load(f)
-            except Exception:
-                markers = []
-    else:
-        markers = []
-    markers.append(marker)
-    with open(file_path, 'w', encoding='utf-8') as f:
-        json.dump(markers, f, ensure_ascii=False, indent=2)
-    return jsonify({'success': True})
+    db_sess = Session()
+    
+    try:
+        marker = Marker(
+            emotion=data.get('emotion'),
+            title=data.get('title'),
+            description=data.get('description'),
+            date=data.get('date'),
+            latitude=data.get('latitude'),
+            longitude=data.get('longitude'),
+            username=session['username']
+        )
+        db_sess.add(marker)
+        db_sess.commit()
+        return jsonify({'success': True})
+    except Exception as e:
+        db_sess.rollback()
+        return jsonify({'success': False, 'error': str(e)}), 500
+    finally:
+        db_sess.close()
 
 @app.route('/get_markers', methods=['GET'])
 def get_markers():
     if 'username' not in session:
         return jsonify([])
-    file_path = os.path.join('data', 'markers.json')
-    if os.path.exists(file_path):
-        with open(file_path, 'r', encoding='utf-8') as f:
-            try:
-                markers = json.load(f)
-            except Exception:
-                markers = []
-    else:
-        markers = []
-    user_markers = [m for m in markers if m.get('username') == session['username']]
-    return jsonify(user_markers)
+    
+    db_sess = Session()
+    try:
+        markers = db_sess.query(Marker).filter(Marker.username == session['username']).all()
+        return jsonify([{
+            'emotion': m.emotion,
+            'title': m.title,
+            'description': m.description,
+            'date': m.date,
+            'latitude': m.latitude,
+            'longitude': m.longitude,
+            'username': m.username
+        } for m in markers])
+    finally:
+        db_sess.close()
 
 @app.route('/logout')
 def logout():
@@ -103,6 +115,5 @@ def logout():
     return redirect(url_for('page'))
 
 if __name__ == '__main__':
-    db_session.global_init('db/users.db')
-    
+    db_session.global_init(DATABASE_URL)
     app.run()
