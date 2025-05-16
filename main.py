@@ -2,20 +2,17 @@ import secrets
 from flask import Flask, request, render_template, flash, redirect, url_for, session, jsonify
 from data import db_session
 from data.users import User
+import sqlite3
 import os
 import json
 
 app = Flask(__name__, template_folder='template')
-app.secret_key = secrets.token_hex(16)
 app.secret_key = os.environ.get('SECRET_KEY', secrets.token_hex(16))
-
 
 @app.route('/')
 def page():
     is_logged_in = 'username' in session
     return render_template("main_page.html", is_logged_in=is_logged_in)
-
-
 
 @app.route('/registration', methods=['GET', 'POST'])
 def signup():
