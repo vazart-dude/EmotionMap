@@ -6,7 +6,7 @@ import os
 import json
 
 app = Flask(__name__, template_folder='template')
-app.secret_key = "secret_key"
+app.secret_key = secrets.token_hex(16)
 
 
 @app.route('/')
