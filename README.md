@@ -28,8 +28,8 @@ EmotionMap - это веб-приложение, позволяющее поль
 
 - **Backend:**
   - Python 3.x
-  - Flask 2.2.2
-  - SQLAlchemy 1.4.27
+  - Flask 3.0.3
+  - SQLAlchemy 2.0.29
 
 - **Frontend:**
   - HTML5
