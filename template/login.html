@@ -59,11 +59,11 @@
     <form action="/login" method="post">
         <div class="mb-3">
             <label for="login" class="form-label">Username</label>
-            <input type="text" class="form-control" name="login" id="login" placeholder="Enter your username" required>
+            <input type="text" class="form-control" name="login" id="login" value='{{ data.login }}'placeholder="Enter your username" required>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+            <input type="password" class="form-control" name="password" id="password" value='{{ data.password }}'placeholder="Password" required>
         </div>
         <div class="d-grid">
             <button type="submit" class="btn btn-custom btn-block">Log In</button>

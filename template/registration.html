@@ -59,19 +59,19 @@
     <form action="/registration" method="post">
         <div class="mb-3">
             <label for="login" class="form-label">Username</label>
-            <input type="text" class="form-control" name="login" id="login" placeholder="Enter your username" required>
+            <input type="text" class="form-control" name="login" id="login" value="{{ data.login }}" placeholder="Enter your username" required>
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
-            <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
+            <input type="email" class="form-control" name="email" id="email" value="{{ data.email }}"  placeholder="Enter your email" required>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+            <input type="password" class="form-control" name="password" id="password" value="{{ data.password }}"  placeholder="Password" required>
         </div>
         <div class="mb-3">
             <label for="confirm-password" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" name="confirm-password" id="confirm-password" placeholder="Confirm Password" required>
+            <input type="password" class="form-control" name="confirm-password" id="confirm-password" value="{{ data.confirm_password }}" placeholder="Confirm Password" required>
             <div id="passwordHelp" class="form-text text-danger" style="display: none;">
                 Пароли не совпадают
             </div>
