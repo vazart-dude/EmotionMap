@@ -29,7 +29,12 @@ def signup():
         user = User()
         result = user.add_user(login, password, email)
         if result:
-            return 'Пользователь успешно добавлен!'
+            login = request.form['login']
+            password = request.form['password']
+            user = User()
+            result = user.login_user(login, password)
+            session['username'] = login
+            return redirect(url_for('profile'))
         else:
             flash("Пользователь с таким логином или email уже существует", "error")
     return render_template("registration.html")
@@ -107,4 +112,4 @@ def logout():
 if __name__ == '__main__':
     db_session.global_init('db/users.db')
     
-    app.run(port=0000, host='127.0.0.1', debug=True)
+    app.run(port=0000, host='127.0.0.1', debug=False)
