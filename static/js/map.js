@@ -80,14 +80,14 @@ document.addEventListener('DOMContentLoaded', function () {
 // Функция для выбора цвета по эмоции
 function getEmotionColor(emotion) {
     switch (emotion) {
-        case 'Радость': return '#ffb3b3';
-        case 'Грусть': return '#a3c2f7';
-        case 'Злость': return '#ffe066';
-        case 'Любовь': return '#b3ffd9';
-        case 'Страх': return '#d1b3ff';
-        case 'Восхищение': return '#ffd1ec';
-        case 'Спокойствие': return '#b3e6ff';
-        case 'Нейтрально': return '#cccccc';
+        case 'Joy': return '#ffb3b3';
+        case 'Sadness': return '#a3c2f7';
+        case 'Anger': return '#ffe066';
+        case 'Love': return '#b3ffd9';
+        case 'Fear': return '#d1b3ff';
+        case 'Excitement': return '#ffd1ec';
+        case 'Peace': return '#b3e6ff';
+        case 'Neutral;': return '#cccccc';
         default: return '#888888';
     }
 }
